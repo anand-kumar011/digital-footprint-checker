@@ -1,0 +1,15 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Generated files and anything users upload: may contain real phone numbers
+FOOTPRINT_UI/temp_uploads/
+FOOTPRINT_UI/temp_outputs/
+output/*.xlsx
+logs/
+
+# OS / secrets
+.DS_Store
+.env

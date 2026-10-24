@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Footprint Checker | I4C MHA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>Digital Footprint Checker</h1>
+                    <p>I4C MHA Investigation Tool</p>
+                </div>
+            </div>
+        </div>
+
+    </nav>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Integrated <span class="gradient-text">Digital Intelligence</span> Platform
+                </h1>
+                <p class="hero-subtitle">
+                    Advanced OSINT collection → Entity correlation → Intelligence lifecycle. 
+                    Real-time footprint analysis across multiple platforms.
+                </p>
+            </div>
+        </div>
+
+
+
+        <!-- Main Dashboard -->
+        <div class="dashboard-grid">
+            <!-- Input Panel -->
+            <div class="panel-3d input-panel">
+                <div class="panel-header">
+                    <div class="panel-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="panel-title">Data Intake Module</h2>
+                    <div class="panel-status status-online"></div>
+                </div>
+
+                <!-- Manual Input -->
+                <div class="input-section">
+                    <label class="input-label">
+                        <span class="label-icon">📱</span>
+                        Mobile Number Input
+                    </label>
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="mobileInput" 
+                            class="input-field-3d" 
+                            placeholder="Enter 10-15 digit number"
+                            onkeypress="if(event.key === 'Enter') addNumber()"
+                        >
+                        <button class="btn-3d btn-add" onclick="addNumber()">
+                            <span class="btn-text">Add</span>
+                            <span class="btn-glow"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- File Upload -->
+                <div class="input-section">
+                    <label class="input-label">
+                        <span class="label-icon">📊</span>
+                        Bulk Upload (Excel)
+                    </label>
+                    <div class="upload-zone" id="uploadArea">
+                        <input type="file" id="fileInput" accept=".xlsx,.xls" style="display: none;" onchange="handleFileUpload()">
+                        <div class="upload-content">
+                            <div class="upload-icon-3d">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                            </div>
+                            <span class="upload-text" id="uploadText">Click or drag Excel file</span>
+                            <span class="upload-hint">Supports .xlsx, .xls formats</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Numbers List -->
+                <div id="numbersList" class="numbers-list" style="display: none;">
+                    <div class="list-header">
+                        <h3 class="list-title">
+                            <span class="title-icon">📋</span>
+                            Queued Numbers (<span id="numbersCount">0</span>)
+                        </h3>
+                        <button class="btn-clear-3d" onclick="clearAllNumbers()">Clear All</button>
+                    </div>
+                    <div id="numbersContainer" class="numbers-container"></div>
+                </div>
+            </div>
+
+            <!-- Status & Control Panel -->
+            <div class="control-column">
+                <!-- System Status -->
+                <div class="panel-3d status-panel">
+                    <div class="panel-header">
+                        <div class="panel-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 6v6l4 2"></path>
+                            </svg>
+                        </div>
+                        <h2 class="panel-title">System Status</h2>
+                        <div class="panel-status status-online"></div>
+                    </div>
+
+                    <div class="status-content">
+                        <div class="status-item">
+                            <div class="status-row">
+                                <span class="status-label">Current Status</span>
+                                <span class="status-indicator indicator-ready"></span>
+                            </div>
+                            <div class="status-value" id="statusText">Ready</div>
+                        </div>
+
+                        <div class="status-divider"></div>
+
+                        <div class="status-item">
+                            <div class="status-row">
+                                <span class="status-label">Uploaded Numbers</span>
+                                <span class="status-indicator indicator-active"></span>
+                            </div>
+                            <div class="status-count" id="totalCount">0</div>
+                        </div>
+
+                        <div class="status-divider"></div>
+
+                        <div class="platform-status">
+                            <h4 class="platform-title">Platform Modules</h4>
+                            <div class="platform-grid">
+                                <div class="platform-item">
+                                    <span class="platform-dot dot-green"></span>
+                                    <span>WhatsApp</span>
+                                </div>
+                                <div class="platform-item">
+                                    <span class="platform-dot dot-green"></span>
+                                    <span>Telegram</span>
+                                </div>
+                                <div class="platform-item">
+                                    <span class="platform-dot dot-green"></span>
+                                    <span>Instagram</span>
+                                </div>
+                                <div class="platform-item">
+                                    <span class="platform-dot dot-green"></span>
+                                    <span>Facebook</span>
+                                </div>
+                                <div class="platform-item">
+                                    <span class="platform-dot dot-green"></span>
+                                    <span>Snapchat</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Process Button -->
+                <button class="btn-process-3d" id="processBtn" onclick="processNumbers()">
+                    <div class="btn-content">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        <span class="btn-text">Execute Analysis</span>
+                    </div>
+                    <div class="btn-glow-effect"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer Info -->
+        <div class="footer-section">
+            <div class="info-card">
+                <div class="info-icon">⚠️</div>
+                <div class="info-content">
+                    <h4>Investigation Mode Active</h4>
+                    <p>OSINT collection tool for authorized law enforcement use only. Results are intelligence indicators for investigative purposes.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
